@@ -32,14 +32,14 @@ Proyecto individual. Me encargué de todo el proceso: limpieza y preparación de
 | Pregunta | Hallazgo |
 |---|---|
 | Plataformas con más potencial en 2017 | **PS4** y **Xbox One**, las únicas con tendencia de crecimiento antes de 2016 |
-| Plataformas líderes del periodo | PS4, PS3 y X360 |
+| Plataformas líderes del periodo | PS4, Xbox One y PS3 |
 | Géneros | Acción, Shooter y Deportes lideran. En promedio venden **~3,7 veces más** que Puzzle, Estrategia y Aventura |
 | Reseñas vs. ventas | Correlación positiva pero **baja**. La crítica profesional pesa más que las reseñas de usuarios |
-| Perfil por región | NA y UE: PS4 lidera (27,8 % y 40,8 % del mercado), con Acción y clasificación `M` al frente. **Japón es distinto:** lidera Nintendo DS (28,6 %) y predomina la clasificación `E` |
+| Perfil por región | NA y UE: PS4 lidera (27,8 % y 40,8 % del mercado), con Acción y Shooter al frente y la clasificación `M` como la más vendida. **Japón es distinto:** lidera Nintendo 3DS (28,6 %), el segundo género es Role-Playing y la clasificación más vendida es `T` |
 | Hipótesis 1: calificaciones Xbox One vs. PC | Son **diferentes** (p ≈ 1,4·10⁻⁵) |
 | Hipótesis 2: calificaciones Acción vs. Deportes | **Sin diferencia significativa** (p ≈ 0,11) |
 
-**Recomendación:** concentrar la campaña de 2017 en juegos de Acción y Shooter para PS4 y Xbox One en Norteamérica y Europa, con una estrategia diferenciada para Japón (Nintendo y juegos con clasificación `E`).
+**Recomendación:** concentrar la campaña de 2017 en juegos de Acción y Shooter para PS4 y Xbox One en Norteamérica y Europa, con una estrategia diferenciada para Japón (Nintendo 3DS, juegos de rol y clasificación `T`).
 
 **Limitaciones:** los datos de 2016 parecen incompletos, por lo que la caída de ventas de ese año puede estar sobreestimada. Además, muchos juegos antiguos no tienen reseñas ni clasificación.
 
@@ -54,7 +54,7 @@ Python · pandas · NumPy · matplotlib · seaborn · SciPy · Jupyter Notebook
 | `video_game_sales_analysis.ipynb` | Notebook con el análisis completo |
 | `games.csv` | Dataset (ventas, reseñas, plataforma, género y clasificación ESRB) |
 
-Para ejecutarlo: `pip install pandas numpy matplotlib seaborn scipy jupyter` y luego abre el notebook.
+Para ejecutarlo: `pip install pandas numpy matplotlib seaborn scipy jupyter` y luego abre el notebook en la misma carpeta que `games.csv`.
 
 ---
 
