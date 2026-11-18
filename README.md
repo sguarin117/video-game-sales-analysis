@@ -1,120 +1,61 @@
-# videogames_eda
-# 📊 Proyecto Integrado: Análisis de Ventas de Videojuegos
+# 🎮 ¿Qué hace exitoso a un videojuego? Análisis de ventas 1980–2016
 
-Este proyecto tiene como objetivo identificar patrones que determinan el éxito de un videojuego, con el fin de detectar proyectos prometedores y planificar campañas publicitarias. Trabajamos con datos históricos de ventas, reseñas y plataformas desde 1980 hasta 2016.
+Análisis exploratorio y estadístico de más de 16.000 videojuegos para identificar qué plataformas, géneros y clasificaciones impulsan las ventas, y en qué apostar para una campaña de marketing en 2017.
 
-## 🧰 Herramientas utilizadas
-
-- Python
-- Jupyter Notebook
-- pandas, numpy
-- matplotlib, seaborn
-- scipy.stats
-
-## 🗂️ Estructura del análisis
+**👉 Empieza aquí:** [`video_game_sales_analysis.ipynb`](video_game_sales_analysis.ipynb), con todo el código, los gráficos y las conclusiones.
 
 ---
 
-### 🧾 Paso 1: Carga y exploración inicial de los datos
+## Contexto y problema
 
-- Se cargó el archivo `games.csv`.
-- Se detectaron valores nulos, principalmente en `critic_score`, `user_score` y `rating`.
+**Ice** es una tienda online que vende videojuegos en todo el mundo y necesita decidir en qué juegos y plataformas invertir su presupuesto publicitario de 2017. Con datos históricos de ventas por región, reseñas de usuarios y de la crítica, géneros, plataformas y clasificación ESRB, el objetivo fue responder:
 
----
+- ¿Qué plataformas están creciendo y cuáles están desapareciendo?
+- ¿Qué géneros son más rentables?
+- ¿Influyen las reseñas en las ventas?
+- ¿Cambia el perfil del jugador entre Norteamérica, Europa y Japón?
 
-### 🔧 Paso 2: Preparación de los datos
+## Mi contribución
 
-- Se normalizaron los nombres de las columnas (minúsculas).
-- Se convirtieron los tipos de datos según lo requerido.
-- Se rellenaron valores nulos con `-1` en columnas numéricas para evitar distorsiones (por ejemplo, en `year_of_release`, `critic_score`, `user_score`).
-- Los valores "TBD" en `user_score` se transformaron a `-1` para facilitar su conversión a tipo `float`.
-- La columna `rating` se rellenó con `'RP'` (Rating Pending) cuando faltaba.
-- Se creó una nueva columna `total_sales` como suma de `NA_sales`, `EU_sales`, `JP_sales` y `Other_sales`.
+Proyecto individual. Me encargué de todo el proceso: limpieza y preparación de los datos, análisis exploratorio, visualizaciones, perfiles por región, pruebas de hipótesis y conclusiones.
 
----
+## Cómo abordé el trabajo: decisiones clave
 
-### 📈 Paso 3: Análisis exploratorio de los datos
+- **Valores ausentes sin distorsionar el análisis.** En lugar de imputar con la media o la mediana (la media de `year_of_release` es 2006, e imputarla habría inflado artificialmente ese año), marqué los ausentes y los valores `TBD` con `-1`, un valor fuera de rango que se filtra fácilmente antes de graficar o calcular.
+- **Elegir el periodo relevante.** Calculé que una plataforma tarda en promedio **~7,6 años** en desaparecer. Como el objetivo era pronosticar 2017, acoté el modelo a **2013–2016** para no arrastrar tendencias de consolas que ya no existen.
+- **Rentabilidad por género con promedios, no totales.** El total de ventas favorece a los géneros con muchos lanzamientos, así que comparé las ventas promedio por juego para medir la rentabilidad real.
+- **Comparación justa entre plataformas.** Para comparar el mismo juego en distintas consolas, filtré solo los títulos disponibles en las cuatro principales (PS3, PS4, X360 y Xbox One).
+- **Validación estadística.** Usé pruebas t (`scipy.stats`, α = 0,05) para contrastar diferencias en las calificaciones de usuarios.
 
-- Se observó un incremento constante en el número de juegos lanzados hasta 2011, seguido de una caída.
-- Las plataformas con mayores ventas históricas fueron:
-  - PlayStation 2 (PS2)
-  - PlayStation 3 (PS3)
-  - Xbox 360
-- Se determinó que el ciclo de vida promedio de una plataforma es de **7.6 años**.
-- Se seleccionaron datos desde **2008 hasta 2016** para construir un modelo representativo.
-- Se encontró que:
-  - Las ventas estaban en descenso en 2016 (posiblemente por datos incompletos).
-  - PS4 y Xbox One venían mostrando un crecimiento en ventas.
-- Las plataformas con mayor dispersión y ventas promedio fueron PS3, X360, XOne y PS4.
-- Correlación entre reseñas y ventas:
-  - Las ventas de PS3 muestran **baja pero positiva correlación** con las reseñas.
-  - La crítica profesional influye más que las reseñas de usuarios.
+## Resultados
 
-#### 🎮 Géneros más vendidos:
+| Pregunta | Hallazgo |
+|---|---|
+| Plataformas con más potencial en 2017 | **PS4** y **Xbox One**, las únicas con tendencia de crecimiento antes de 2016 |
+| Plataformas líderes del periodo | PS4, PS3 y X360 |
+| Géneros | Acción, Shooter y Deportes lideran. En promedio venden **~3,7 veces más** que Puzzle, Estrategia y Aventura |
+| Reseñas vs. ventas | Correlación positiva pero **baja**. La crítica profesional pesa más que las reseñas de usuarios |
+| Perfil por región | NA y UE: PS4 lidera (27,8 % y 40,8 % del mercado), con Acción y clasificación `M` al frente. **Japón es distinto:** lidera Nintendo DS (28,6 %) y predomina la clasificación `E` |
+| Hipótesis 1: calificaciones Xbox One vs. PC | Son **diferentes** (p ≈ 1,4·10⁻⁵) |
+| Hipótesis 2: calificaciones Acción vs. Deportes | **Sin diferencia significativa** (p ≈ 0,11) |
 
-| Género     | Observación                      |
-|------------|----------------------------------|
-| Acción     | Más rentable                     |
-| Shooter    | Muy popular                      |
-| Deportes   | Altas ventas                     |
-| Estrategia | Ventas bajas                     |
-| Puzzle     | Ventas bajas                     |
+**Recomendación:** concentrar la campaña de 2017 en juegos de Acción y Shooter para PS4 y Xbox One en Norteamérica y Europa, con una estrategia diferenciada para Japón (Nintendo y juegos con clasificación `E`).
 
----
+**Limitaciones:** los datos de 2016 parecen incompletos, por lo que la caída de ventas de ese año puede estar sobreestimada. Además, muchos juegos antiguos no tienen reseñas ni clasificación.
 
-### 🌍 Paso 4: Perfil de usuario por región
+## Herramientas
 
-#### 📌 Norteamérica:
-- Plataforma líder: **PS4** (27.8%)
-- Género más popular: **Acción**
-- ESRB más vendido: `M` (Mature)
+Python · pandas · NumPy · matplotlib · seaborn · SciPy · Jupyter Notebook
 
-#### 📌 Europa:
-- Plataforma líder: **PS4** (40.8%)
-- Género más popular: **Acción**
-- ESRB más vendido: `M` (Mature)
+## Archivos
 
-#### 📌 Japón:
-- Plataforma líder: **Nintendo DS** (28.6%)
-- Género más popular: **Plataforma**
-- ESRB más vendido: `E` (Everyone)
+| Archivo | Descripción |
+|---|---|
+| `video_game_sales_analysis.ipynb` | Notebook con el análisis completo |
+| `games.csv` | Dataset (ventas, reseñas, plataforma, género y clasificación ESRB) |
 
-> Las clasificaciones ESRB tienen un impacto claro y diferente en cada región.
+Para ejecutarlo: `pip install pandas numpy matplotlib seaborn scipy jupyter` y luego abre el notebook.
 
 ---
 
-### 🧪 Paso 5: Pruebas de hipótesis
-
-#### Hipótesis 1:
-- **H₀**: Las calificaciones promedio de usuarios para Xbox One y PC son iguales.
-- **Resultado**: Se rechaza H₀ → *Las calificaciones son diferentes*.
-
-#### Hipótesis 2:
-- **H₀**: Las calificaciones promedio de usuarios para los géneros Acción y Deportes son iguales.
-- **Resultado**: No se rechaza H₀ → *No hay diferencia significativa*.
-
----
-
-### ✅ Conclusiones
-
-- Las plataformas con mayor potencial en 2017 son PS4 y Xbox One.
-- El género Acción lidera el mercado, aunque el género más rentable varía según la región.
-- Las reseñas tienen un impacto, pero no son determinantes del éxito.
-- El ESRB rating es un factor clave en la decisión de compra dependiendo del mercado.
-
----
-
-## 📂 Archivos
-
-- `proyecto_videojuegos.ipynb`: Notebook con todo el código y visualizaciones.
-- `games.csv`: Dataset original (no incluido por derechos de uso).
-- `README.md`: Este archivo.
-
----
-
-## 🧠 Autor
-
-**Sebastián Camilo Guarín Novoa**  
-Proyecto desarrollado como parte de la formación en análisis de datos.
-
----
+**Sebastián Camilo Guarín Novoa** · [LinkedIn](https://www.linkedin.com/in/sebastian-guarin/) · sguarin96@gmail.com
